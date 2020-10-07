@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>B18 Zoom Links</title>
+    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+   
+<style>
+.hid
+{
+display:none;
+}
+table {
+border-collapse: collapse;
+width:100%;
+text-align:center;
+border-radius: 1em;
+}
+table, td, th {
+border: 1px solid black;
+}
+.newdata
+{
+padding:5px;
+
+}
+@media only screen and (max-width: 600px)
+{
+  h1
+  {
+    font-size: 2em;
+  }
+}
+</style>
+</head>
+
+<body style="font-family: 'Baloo Paaji 2', cursive;border-style: none;border-top-width: 50px;margin: 0px;">
+    <h1 style="padding: 12px;">Click on the button to get today's zoom class sessions links of section:B18</h1><button class="btn btn-primary text-monospace text-capitalize text-left border rounded-0 border-primary shadow" type="submit" id="submit" onclick="goPython()" style="margin: 25px;">Get Links&nbsp;<i class="fas fa-link"></i></button>
+    <div class="hid">
+    <p class="text-left" style="font-size: 27px;margin: 0px;margin-right: 0px;margin-left: 100px;"><i class="fa fa-circle flash animated infinite" style="color: #fbae17;"></i><strong>&nbsp; Hold on Loading...</strong></p>
+</div>
+<div id="table" class="newdata">
+
+
+     </div> 
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/bootstrap.min.js"></script>
+
+
+<script>
+function goPython(){
+$(".hid").show(0).delay(5400).hide(0);
+ $("#submit").prop("disabled","true");
+$.ajax({
+    url:"https://zms5a5gqje.execute-api.us-east-1.amazonaws.com/link",
+    method:"POST",
+    cache:false,
+ success:function(result){
+    setTimeout(function(){
+        if(!result[0])
+        {
+        $(".hid").css("display", "none");
+            tr='<p style="font-size:30px">'+"Please Check back later still no sessions created!"+'</p>';
+            $("#table").html(tr);
+        }
+        else
+        {
+      $(".hid").css("display", "none");
+     
+        var tr = '<p>Date:'+result[0]['Date']+'</p><p>Day:'+result[0]['Day']+'</p><table border=1>';
+        tr+='<thead><td>'+"Time"+'</td><td>'+"Subject Name"+'</td><td>'+"Link"+'</td></thead>'
+    for(var f=0;f<result.length;f++) {
+      tr += '<tr><td>' + result[f]['Time']+'</td><td>'+result[f]['Subject_name'] +'</td><td><a href='+result[f]['Link']+ 'target="_blank">'+"Link"+'</a></td></tr>';
+     }
+     tr+='</table>'
+      $("#table").html(tr);
+                }});
+   }
+});
+        }
+
+</script>
+
+
+
+</body>
+
+</html>
